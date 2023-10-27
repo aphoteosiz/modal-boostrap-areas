@@ -40,7 +40,7 @@
   <div class="modal-dialog modal-dialog-centered">
   <div class="modal" tabindex="-1" role="dialog" style="display: block;">
     <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content text-center">
+      <div class="modal-content text-align:center">
         <div class="modal-header">
           <h3 class="modal-title" style="text-align:center;" style="padding: 1rem">Registrar nueva area</h3>
           <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -48,20 +48,20 @@
           </button>
          </div>
 
-        <div class="modal-body" class="text-center" >
-<label for="textInput1" style="padding: 1rem">Nombre del area:</label>
+        <div class="modal-body">
+<label class="left-label" for="textInput1" style="padding: 1rem;">Nombre del area:</label>
 <br>
-<input type="text" id="textInput1" [(ngModel)]="input1Value" style="width: 300px;" required="">
+<input class="left-label" type="text" id="textInput1" [(ngModel)]="input1Value" style="width: 300px; align-items: center;" required>
 <br>
 
-<label for="textInput2" style="padding: 1rem">clave:</label>
+<label class="left-label" for="textInput2" style="padding: 1rem">clave:</label>
 <br>
-<input type="text" id="textInput2" [(ngModel)]="input2Value" style="width: 300px; text-transform: uppercase;" required="" maxlength="4">
+<input class="left-label" type="text" id="textInput2" [(ngModel)]="input2Value" style="width: 300px; text-transform: uppercase;" required="" maxlength="4">
 <br>
 <div class="content-center">
-  <label for="selectBox" class="align-items-center" style="padding: 1rem; padding-bottom: 1rem;">Selecciona una opción:</label>
+  <label class="left-label" for="selectBox" class="align-items-center" style="padding: 1rem; padding-bottom: 1rem;">Selecciona una opción:</label>
 <br>
-  <select id="selectBox" [(ngModel)]="selectedOption" style="width: 300px;">
+  <select class="centered-select" id="selectBox" [(ngModel)]="selectedOption" style="width: 300px;">
     <option value="opcion1">Opción 1</option>
     <option value="opcion2">Opción 2</option>
     <option value="opcion3">Opción 3</option>

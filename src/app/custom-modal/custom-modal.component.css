@@ -39,3 +39,21 @@
     opacity: 1
   }
 }
+    .left-label {
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .centered-input {
+      width: 300px;
+      margin: 0 auto;
+      /* Esto centra el elemento horizontalmente */
+    }
+
+    .centered-select {
+      width: 300px;
+      margin: 0 auto;
+    }
+
+
+
