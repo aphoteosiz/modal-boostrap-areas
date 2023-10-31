@@ -35,54 +35,94 @@
 </div>
  -->
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="modal-is-open animation fade-in" *ngIf="modalService.modal">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal" tabindex="-1" role="dialog" style="display: block;">
+            <div class="modal-dialog modal-md" role="document">
+              <div class="modal-content text-align:center">
+                <div class="modal-header content-center">
+                  <h3 class="modal-title centered-input" style="text-align: center; padding: 1rem">Registrar area</h3>
+                  <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
 
-<div class="modal-is-open animation fade-in" *ngIf="modalService.modal">
-  <div class="modal-dialog modal-dialog-centered">
-  <div class="modal" tabindex="-1" role="dialog" style="display: block;">
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content text-align:center">
-        <div class="modal-header">
-          <h3 class="modal-title" style="text-align:center;" style="padding: 1rem">Registrar nueva area</h3>
-          <button (click)="closeDialog()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-         </div>
+                <div class="modal-body">
+                  <label class="left-label" for="textInput1" style="text-align: end; padding: 1rem;">Nombre del
+                    area:</label>
+                  <br>
+                  <div class="container centered-input">
+                    <input type="text" id="nombre" [(ngModel)]="areas.nombre"
+                      style="width: 300px; align-items: center;" required>
+                  </div>
+                  <br>
 
-        <div class="modal-body">
-<label class="left-label" for="textInput1" style="padding: 1rem;">Nombre del area:</label>
-<br>
-<input class="left-label" type="text" id="textInput1" [(ngModel)]="input1Value" style="width: 300px; align-items: center;" required>
-<br>
+                  <label class="left-label" for="textInput2" style="padding: 1rem">clave:</label>
+                  <br>
+                  <div class=" container centered-input">
+                    <input type="text" id="clave" [(ngModel)]="areas.clave"
+                      style="width: 300px; text-transform: uppercase;" placeholder="max cuatro caracteres" required
+                      maxlength="4">
+                  </div>
+                  <br>
 
-<label class="left-label" for="textInput2" style="padding: 1rem">clave:</label>
-<br>
-<input class="left-label" type="text" id="textInput2" [(ngModel)]="input2Value" style="width: 300px; text-transform: uppercase;" required="" maxlength="4">
-<br>
-<div class="content-center">
-  <label class="left-label" for="selectBox" class="align-items-center" style="padding: 1rem; padding-bottom: 1rem;">Selecciona una opción:</label>
-<br>
-  <select class="centered-select" id="selectBox" [(ngModel)]="selectedOption" style="width: 300px;">
-    <option value="opcion1">Opción 1</option>
-    <option value="opcion2">Opción 2</option>
-    <option value="opcion3">Opción 3</option>
-    <br>
-  </select>
-          <div class="container">
-            <div class="row">
-              <div class="col-sm">
+                  <label class="left-label" for="selectBox">Selecciona un departamento:</label>
 
+                  <div class=" container centered-input" style="padding: 1rem;">
+                    <select class="centered-select" id="selectBox" [(ngModel)]="selectedOption">
+                      <option value="opcion1">Opción 1</option>
+                      <option value="opcion2">Opción 2</option>
+                      <option value="opcion3">Opción 3</option>
+
+                    </select>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-sm">
+
+                        <div class="modal-footer centered-input">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            (click)="guardaRegistro()">añadir</button>
+                          <button type="button" class="btn btn-success" data-dismiss="modal"
+                            (click)="cancel()">editar</button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal"
+                            (click)="cancel()">cerrar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-
             </div>
-          </div>
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success btn text-left" data-dismiss="modal" (click)="cancel()">Guardar</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()">cerrar</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-</div>
+<div class="container">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr class="text-center headerTabla tabla-text">
+        <th scope="col">nombre</th>
+        <th scope="col">clave</th>
+        <th scope="col">departamento</th>
+        <th scope="col">editar</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+
+      <tr *ngFor="let item of lstAreas">
+        <td>{{item.nombre}}</td>
+        <td>{{item.clave}}</td>
+        <td>{{item.departamento}}</td>
+
+        <td><button (click)="abrirModal()" style="height: 20px;" (click)="editarRegistro(1)" class="btn btn-primary"><i class="bi bi-pencil-square"></i></button></td>
+        </tr>
+        </tbody>
+  </table>
+
