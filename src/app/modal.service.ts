@@ -4,17 +4,25 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ModalService {
+  areas: { id: number; nombre: string; clave: string; departamento: string; };
+  selectedOption: string;
 
 
   constructor() { }
-  public modal: boolean = false;
+  public modalRegistrar: boolean = false;
+  public modalEditar: boolean = false;
   public login: boolean = false;
-  showModal() {
-    this.modal = true;
+  showModalRegistrar() {
+    this.modalRegistrar = true;
+  }
+
+  showModalEditar() {
+    this.modalEditar = true;
   }
 
   closeModal() {
-    this.modal = false;
+    this.modalRegistrar = false;
+    this.modalEditar = false;
   }
 
   openLogin() {
@@ -23,6 +31,14 @@ export class ModalService {
   closeLogin() {
     this.login = false;
   }
+  limpiarCampos() {
+    this.areas = {
+      id: 0,
+      nombre: '',
+      clave: '',
+      departamento: ''
+    }
+    this.selectedOption = '';
   }
-   
+}
 

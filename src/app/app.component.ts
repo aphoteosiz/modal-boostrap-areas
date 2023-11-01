@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalService } from './modal.service';
+import { area } from './custom-modal/interfaces/area.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,15 @@ import { ModalService } from './modal.service';
 })
 export class AppComponent {
   title = 'modal';
+  areas: { id: number; nombre: string; clave: string; departamento: string; };
+  selectedOption: string;
   constructor(public modalService: ModalService) { }
 
 
-  showModal() {
-    console.log("modal");
+  CargarDatosModal() {
 
-    this.modalService.showModal();
+
+    this.modalService.showModalRegistrar();
   }
 
   closeModal() {
@@ -25,4 +28,6 @@ export class AppComponent {
     this.modalService.openLogin();
   }
 
-}
+  }
+
+

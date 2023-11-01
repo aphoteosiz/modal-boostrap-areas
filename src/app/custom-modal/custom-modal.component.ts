@@ -13,6 +13,12 @@ export class CustomModalComponent {
   nombre: string = '';
   clave: string = '';
   selectedOption: string = '';
+  CargarDatos: any;
+  EditarDatos: any;
+  textInput1: string;
+  textInput2:string
+  registroEditado: area;
+  modalEditado: boolean=false;
 
 
 
@@ -26,24 +32,6 @@ export class CustomModalComponent {
     clave: '1234',
     departamento: 'infra'
   }
-  areas1: area = {
-    id: 1,
-    nombre: ' sistemas',
-    clave: 'HQ13',
-    departamento: 'IT'
-  }
-  areas2: area = {
-    id: 2,
-    nombre: 'Ventas',
-    clave: 'KS12',
-    departamento: 'Customers'
-  }
-  areas3: area = {
-    id: 3,
-    nombre: 'atenciona clientes',
-    clave: 'QOK1',
-    departamento: 'AT cliente'
-  }
 
 
   ngOnInit() {
@@ -51,6 +39,8 @@ export class CustomModalComponent {
     // this.lstAreas.push(this.areas1);
     // this.lstAreas.push(this.areas2);
     // this.lstAreas.push(this.areas3);
+    this.nombre = '';
+    this.clave = '';
 
 
   }
@@ -58,30 +48,35 @@ export class CustomModalComponent {
   cancel() {
     console.log("entrooooooo");
 
-    this.modalService.modal=false;
+    this.modalService.modalEditar = false;
+    this.modalService.modalEditar = false;
   }
 
 
   save() {
     console.log("entrooooooo");
 
-    this.modalService.modal = false;
+    this.modalService.modalEditar = false;
+    this.modalService.modalEditar = false;
   }
   closeModal() {
-this.modalService.modal = false;
+ this.modalService.modalEditar = false;
+    this.modalService.modalEditar = false;
   }
   closeDialog() {
     this.modalService.closeModal();
 
   }
-  editarRegistro(id) {
-
+  editarRegistro(id: number) {
+    this.registroEditado = this.lstAreas.find(area => area.id === id);
+    this.modalEditado = true;
+    this.modalService.showModalEditar();
   }
   guardaRegistro() {
     const nuevaArea: area = {
       id: this.lstAreas.length + 1,
-      nombre: this.areas.nombre,
-      clave: this.areas.clave,
+      nombre: this.nombre,
+      clave: this.clave,
       departamento: this.selectedOption
     };
     this.lstAreas.push(nuevaArea);
@@ -92,16 +87,19 @@ this.modalService.modal = false;
       departamento:''
     }
     this.selectedOption = '';
+    this.nombre = '';
+    this.clave = '';
     this.modalService.closeModal();
 
 
 
   }
-  abrirModal() {
-    this.modalService.showModal();
+  abrirModal(modalId: string) {
+
+       this.modalService.showModalEditar();
+    }
+
+
 
   }
-  cerrarModal() {
 
-  }
-}
