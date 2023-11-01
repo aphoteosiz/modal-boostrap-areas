@@ -55,10 +55,14 @@
       margin: 0 auto;
     }
     .centrar{
-      width: 100;
-      margin: 0;
-    }
+      width: 200px;
+      margin: 1%;
 
+        justify-content: center;
+    }
+        .input-vacio {
+          border: 2px solid red;
+        }
 
 
 

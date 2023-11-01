@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ModalService } from '../modal.service';
 import { area } from './interfaces/area.interfaces';
+import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 
 
@@ -16,15 +19,23 @@ export class CustomModalComponent {
   CargarDatos: any;
   EditarDatos: any;
   textInput1: string;
-  textInput2:string
+  textInput2: string
   registroEditado: area;
-  modalEditado: boolean=false;
+  modalEditado: boolean = false;
+  form: any;
+  router: any;
+
+registro: FormGroup;
 
 
 
+  constructor(public modalService: ModalService, private formBuilder: FormBuilder) {
+    this.registro = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      clave: ['', [Validators.required, Validators.maxLength(4)]],
+    })
+   }
 
-
-  constructor(public modalService: ModalService) { }
   lstAreas: area[] = [];
   areas: area = {
     id: 0,
@@ -49,21 +60,30 @@ export class CustomModalComponent {
     console.log("entrooooooo");
 
     this.modalService.modalEditar = false;
-    this.modalService.modalEditar = false;
+    this.modalService.modalRegistrar = false;
+    this.selectedOption = '';
+    this.nombre = '';
+    this.clave = '';
+    this.modalService.closeModal();
   }
 
 
   save() {
-    console.log("entrooooooo");
+
+
 
     this.modalService.modalEditar = false;
-    this.modalService.modalEditar = false;
+    this.modalService.modalRegistrar = false;
   }
   closeModal() {
- this.modalService.modalEditar = false;
+    this.modalService.modalEditar = false;
     this.modalService.modalEditar = false;
   }
   closeDialog() {
+    this.modalService.closeModal();
+    this.selectedOption = '';
+    this.nombre = '';
+    this.clave = '';
     this.modalService.closeModal();
 
   }
@@ -73,33 +93,62 @@ export class CustomModalComponent {
     this.modalService.showModalEditar();
   }
   guardaRegistro() {
-    const nuevaArea: area = {
-      id: this.lstAreas.length + 1,
-      nombre: this.nombre,
-      clave: this.clave,
-      departamento: this.selectedOption
-    };
-    this.lstAreas.push(nuevaArea);
-    this.areas = {
-      id:0,
-      nombre: '',
-      clave: '',
-      departamento:''
+
+    if (this.registro.invalid==false) {
+
+
+
+      const nuevaArea: area = {
+
+        id: this.lstAreas.length + 1,
+        nombre: this.nombre,
+        clave: this.clave,
+        departamento: this.selectedOption
+      };
+      this.lstAreas.push(nuevaArea);
+      this.areas = {
+        id: 0,
+        nombre: '',
+        clave: '',
+        departamento: ''
+      }
+      this.selectedOption = '';
+      this.nombre = '';
+      this.clave = '';
+      this.modalService.closeModal();
+
     }
-    this.selectedOption = '';
-    this.nombre = '';
-    this.clave = '';
-    this.modalService.closeModal();
 
 
 
   }
   abrirModal(modalId: string) {
 
-       this.modalService.showModalEditar();
+    this.modalService.showModalEditar();
+  }
+  validarFormulario(): boolean {
+    if (this.form.valid) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'su registro ha sido guardado',
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      return true;
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'hay campos vacios!',
+        footer: 'verifique si su informacion esta completa'
+      });
+      return false;
+    }
+  }
+  campoVacio(campo:string):boolean {
+    return campo === null || campo === '';
     }
 
-
-
-  }
-
+}

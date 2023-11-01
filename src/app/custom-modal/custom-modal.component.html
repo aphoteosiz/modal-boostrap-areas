@@ -49,14 +49,17 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-
+                  <form [formGroup]="registro">
                 <div class="modal-body">
                   <label class="left-label" for="nombre" style="text-align: end; padding: 1rem;">Nombre del
                     area:</label>
                   <br>
                   <div class="container centered-input">
                     <input type="text" id="nombre" [(ngModel)]="nombre" style="width: 300px; align-items: center;"
-                      required>
+                    formControlName="nombre" [ngClass]="{'input-vacio': campoVacio(nombre)}" required>
+                    <div *ngIf="registro.get('nombre').hasError('required')" class="error-message">
+                      Nombre es obligatorio.
+                    </div>
                   </div>
                   <br>
 
@@ -64,14 +67,18 @@
                   <br>
                   <div class=" container centered-input">
                     <input type="text" id="clave" [(ngModel)]="clave" style="width: 300px; text-transform: uppercase;"
-                      placeholder="max cuatro caracteres" required maxlength="4">
+                      placeholder="max cuatro caracteres" [ngClass]="{'input-vacio': campoVacio(clave)}" required maxlength="4"
+                      formControlName="clave">
+                      <div *ngIf="registro.get('clave').hasError('maxlength')" class="error-message">
+                        La clave debe tener un máximo de 4 caracteres.
+                      </div>
                   </div>
                   <br>
 
                   <label class="left-label" for="selectBox">Selecciona un departamento:</label>
 
                   <div class=" container centered-input" style="padding: 1rem;">
-                    <select class="centered-select" id="selectBox" [(ngModel)]="selectedOption">
+                    <select class="centered-select" id="selectedOption" [(ngModel)]="registroEditado.departamento">
                       <option value="opcion1">Opción 1</option>
                       <option value="opcion2">Opción 2</option>
                       <option value="opcion3">Opción 3</option>
@@ -82,19 +89,21 @@
                     <div class="row">
                       <div class="col-sm">
 
-                        <div class="modal-footer centered-input">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            (click)="guardaRegistro()">añadir</button>
+                        <div class="modal-footer centered-input" style="justify-content: center;">
                           <button type="button" class="btn btn-success" data-dismiss="modal"
-                            (click)="cancel()">editar</button>
+                            (click)="guardaRegistro()" [disabled]="registro.invalid==true">añadir</button>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"
                             (click)="cancel()">cerrar</button>
+
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                </form>
+
               </div>
+
             </div>
 
           </div>
@@ -103,6 +112,7 @@
     </div>
   </div>
 </div>
+
 <div class="container">
   <table class="table table-bordered table-striped table-hover" id="registro">
     <thead>
@@ -166,7 +176,7 @@
                   <label class="left-label" for="selectBox">Selecciona un departamento:</label>
 
                   <div class=" container centered-input" style="padding: 1rem;">
-                    <select class="centered-select" id="selectBox" [(ngModel)]="registroEditado.departamento">
+                    <select class="centered-select" id="selectedOption" [(ngModel)]="registroEditado.departamento">
                       <option value="opcion1">Opción 1</option>
                       <option value="opcion2">Opción 2</option>
                       <option value="opcion3">Opción 3</option>
@@ -177,10 +187,9 @@
                     <div class="row">
                       <div class="col-sm">
 
-                        <div class="modal-footer centered-input">
-                          
+                        <div class="modal-footer" style="justify-content: center;">
                           <button type="button" class="btn btn-success" data-dismiss="modal"
-                            (click)="cancel()">editar</button>
+                            (click)="save()">actualizar</button>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"
                             (click)="cancel()">cerrar</button>
                         </div>
