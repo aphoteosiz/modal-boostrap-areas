@@ -3,6 +3,7 @@ import { ModalService } from '../modal.service';
 import { area } from './interfaces/area.interfaces';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { departamento } from './interfaces/departamento.interfaces';
 
 
 
@@ -24,8 +25,10 @@ export class CustomModalComponent {
   modalEditado: boolean = false;
   form: any;
   router: any;
+  arr: string = '';
+  registroOriginal: any;
 
-registro: FormGroup;
+  registro: FormGroup;
 
 
 
@@ -33,8 +36,11 @@ registro: FormGroup;
     this.registro = this.formBuilder.group({
       nombre: ['', Validators.required],
       clave: ['', [Validators.required, Validators.maxLength(4)]],
+      departamento: ['']
+
+
     })
-   }
+  }
 
   lstAreas: area[] = [];
   areas: area = {
@@ -44,6 +50,23 @@ registro: FormGroup;
     departamento: 'infra'
   }
 
+  lstDepartamento: departamento[] = [];
+  Departamento: departamento = {
+    id: 0,
+    nombre: 'infra',
+  }
+
+  departamento1: departamento = {
+    id: 1,
+    nombre: 'IT',
+  }
+
+  departamento2: departamento = {
+    id: 2,
+    nombre: 'ventas',
+  }
+  registros: area[] = [];
+
 
   ngOnInit() {
     // this.lstAreas.push(this.areas);
@@ -52,6 +75,7 @@ registro: FormGroup;
     // this.lstAreas.push(this.areas3);
     this.nombre = '';
     this.clave = '';
+    this.selectedOption = '';
 
 
   }
@@ -64,13 +88,19 @@ registro: FormGroup;
     this.selectedOption = '';
     this.nombre = '';
     this.clave = '';
+    this.registroOriginal = { ...this.registroEditado };
     this.modalService.closeModal();
   }
 
 
+
   save() {
-
-
+    const editado: area = {
+      id : this.registroEditado.id,
+      nombre:  this.registroEditado.nombre,
+      clave :  this.registroEditado.clave,
+      departamento : this.registroEditado.departamento,
+    }
 
     this.modalService.modalEditar = false;
     this.modalService.modalRegistrar = false;
@@ -80,6 +110,7 @@ registro: FormGroup;
     this.modalService.modalEditar = false;
   }
   closeDialog() {
+    this.registroOriginal = { ...this.registroEditado };
     this.modalService.closeModal();
     this.selectedOption = '';
     this.nombre = '';
@@ -88,36 +119,56 @@ registro: FormGroup;
 
   }
   editarRegistro(id: number) {
+
     this.registroEditado = this.lstAreas.find(area => area.id === id);
     this.modalEditado = true;
+    this.registroOriginal = { ...this.registroEditado };
     this.modalService.showModalEditar();
   }
   guardaRegistro() {
-
-    if (this.registro.invalid==false) {
-
-
-
+    if (this.camposCompletos()) {
       const nuevaArea: area = {
 
         id: this.lstAreas.length + 1,
         nombre: this.nombre,
         clave: this.clave,
         departamento: this.selectedOption
-      };
-      this.lstAreas.push(nuevaArea);
-      this.areas = {
-        id: 0,
-        nombre: '',
-        clave: '',
-        departamento: ''
-      }
-      this.selectedOption = '';
-      this.nombre = '';
-      this.clave = '';
-      this.modalService.closeModal();
 
+
+      }
+      this.lstAreas.push(nuevaArea);
     }
+
+    // if (this.registro.valid) {
+
+    //   const nuevaArea: area = {
+
+    //     id: this.lstAreas.length + 1,
+    //     nombre: this.nombre,
+    //     clave: this.clave,
+    //     departamento: this.selectedOption
+
+    //   };
+
+    //   this.lstAreas.push(nuevaArea);
+    //   this.areas = {
+    //     id: 0,
+    //     nombre: '',
+    //     clave: '',
+    //     departamento: ''
+    //   }
+
+    // }
+
+
+
+
+    this.nombre = '';
+    this.clave = '';
+    this.selectedOption = '';
+    this.modalService.closeModal();
+
+
 
 
 
@@ -147,8 +198,11 @@ registro: FormGroup;
       return false;
     }
   }
-  campoVacio(campo:string):boolean {
+  campoVacio(campo: string): boolean {
     return campo === null || campo === '';
-    }
+  }
+  camposCompletos(): boolean {
+    return this.nombre.trim() !== '' && this.clave.trim() !== '';
 
+  }
 }

@@ -61,8 +61,13 @@
         justify-content: center;
     }
         .input-vacio {
-          border: 2px solid red;
+          border: thin solid red;
         }
+        .input-lleno{
+          border: thin solid green}
+
+        
+
 
 
 
