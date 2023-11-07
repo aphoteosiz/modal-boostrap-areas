@@ -55,11 +55,13 @@
                       area:</label>
                     <br>
                     <div class="container centered-input">
-                      <input type="text" id="nombre" [(ngModel)]="nombre" style="width: 300px; align-items: center;" [ngClass]="{'input-vacio': nombre===''}">
+                      <input type="text" id="nombre" [(ngModel)]="nombre" style="width: 300px; align-items: center;" [ngClass]="{'input-vacio': nombre===''}"
+                       placeholder="coloque el nombre del area" (input)="validarYConvertirNombre($event)">
+                      <span *ngIf="nombre === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
 
-                      <!-- <div *ngIf="registro.get('nombre').hasError('required')" class="error-message"> -->
+                      <!-- <div *ngIf="registro.get('nombre').hasError('required')" class="error-message">
 
-                      <!-- </div> -->
+                      </div> -->
                     </div>
                     <br>
 
@@ -67,8 +69,8 @@
                     <br>
                     <div class=" container centered-input">
                       <input type="text" id="clave" [(ngModel)]="clave" style="width: 300px; text-transform: uppercase;"
-                      [ngClass]="{'input-vacio': clave ===''}" placeholder="max cuatro caracteres">
-
+                      [ngClass]="{'input-vacio': clave ===''}" placeholder="max cuatro caracteres"  maxlength="4" (input)="validarYConvertirClave($event)" >
+                      <span *ngIf="clave === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
                       <!-- <div *ngIf="registro.get('clave').hasError('maxlength')" class="error-message">
                         La clave debe tener un máximo de 4 caracteres.
                       </div> -->
@@ -79,6 +81,7 @@
 
                     <div class=" container centered-input" style="padding: 1rem;">
                       <select class="centered-select" id="departamento" [(ngModel)]="selectedOption">
+                        <option value="" [disabled]="true" [selected]="true">seleccione un departamento</option>
                         <option value="opcion1">Opción 1</option>
                         <option value="opcion2">Opción 2</option>
                         <option value="opcion3">Opción 3</option>
@@ -86,6 +89,7 @@
                         </option> -->
 
                       </select>
+                      <span >*Este campo es opcional</span>
                     </div>
                     <div class="container">
                       <div class="row">
@@ -123,6 +127,7 @@
         <th scope="col">clave</th>
         <th scope="col">departamento</th>
         <th scope="col">editar</th>
+        <th scope="col">eliminar</th>
       </tr>
     </thead>
     <tbody class="text-center">
@@ -138,6 +143,11 @@
 
           </button>
         </td>
+        <td>
+          <button class="btn btn-danger" (click)="eliminarRegistro(1)">
+            <i class="bi bi-trash"></i>
+
+          </button>
       </tr>
     </tbody>
   </table>
@@ -164,6 +174,7 @@
                       <input type="text" id="nombre" [(ngModel)]="registroEditado.nombre" [ngClass]="{'input-vacio': nombre ===''}"
                         style="width: 300px; align-items: center;" required>
                     </div>
+                    <span *ngIf="registroEditado.nombre=== ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
                     <br>
 
                     <label class="left-label" for="textInput2" style="padding: 1rem">clave:</label>
@@ -173,6 +184,7 @@
                         style="width: 300px; text-transform: uppercase;" placeholder="max cuatro caracteres" required
                         maxlength="4">
                     </div>
+                    <span *ngIf="registroEditado.clave === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
                     <br>
 
                     <label class="left-label" for="selectBox">Selecciona un departamento:</label>

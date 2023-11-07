@@ -21,12 +21,13 @@ export class CustomModalComponent {
   EditarDatos: any;
   textInput1: string;
   textInput2: string
-  registroEditado: area;
+  registroEditado: area | null = null;
   modalEditado: boolean = false;
   form: any;
   router: any;
   arr: string = '';
   registroOriginal: any;
+
 
   registro: FormGroup;
 
@@ -88,21 +89,21 @@ export class CustomModalComponent {
     this.selectedOption = '';
     this.nombre = '';
     this.clave = '';
-    this.registroOriginal = { ...this.registroEditado };
+    if (this.registroEditado)
+      this.registroEditado = { ...this.registroOriginal };
     this.modalService.closeModal();
   }
 
 
 
   save() {
-    const editado: area = {
-      id : this.registroEditado.id,
-      nombre:  this.registroEditado.nombre,
-      clave :  this.registroEditado.clave,
-      departamento : this.registroEditado.departamento,
+    const index = this.lstAreas.findIndex(area => area.id === this.registroEditado.id);
+    if (index !== -1) {
+      this.lstAreas[index] = { ...this.registroEditado };
     }
 
     this.modalService.modalEditar = false;
+    this.registroEditado = null;
     this.modalService.modalRegistrar = false;
   }
   closeModal() {
@@ -120,8 +121,7 @@ export class CustomModalComponent {
   }
   editarRegistro(id: number) {
 
-    this.registroEditado = this.lstAreas.find(area => area.id === id);
-    this.modalEditado = true;
+    this.registroEditado = { ...this.lstAreas.find(area => area.id === id) };
     this.registroOriginal = { ...this.registroEditado };
     this.modalService.showModalEditar();
   }
@@ -130,14 +130,15 @@ export class CustomModalComponent {
       const nuevaArea: area = {
 
         id: this.lstAreas.length + 1,
-        nombre: this.nombre,
-        clave: this.clave,
+        nombre: this.nombre.replace(/[^a-zA-Z]/g, ''),
+        clave: this.clave=this.clave.toUpperCase(),
         departamento: this.selectedOption
 
 
       }
       this.lstAreas.push(nuevaArea);
     }
+
 
     // if (this.registro.valid) {
 
@@ -177,6 +178,24 @@ export class CustomModalComponent {
 
     this.modalService.showModalEditar();
   }
+  validarYConvertirClave(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+
+    // Utiliza una expresión regular para permitir solo letras (sin acentos)
+    const letras = inputValue.replace(/[^a-zA-Z]+/g, '');
+
+    // Convierte las letras a mayúsculas
+    inputElement.value = letras.toUpperCase();
+  }
+  validarYConvertirNombre(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+
+    // Utiliza una expresión regular para permitir solo letras (sin acentos)
+    const palabras = inputValue.replace(/[^a-zA-Z]+/g, '');
+    inputElement.value = palabras;
+  }
   validarFormulario(): boolean {
     if (this.form.valid) {
       Swal.fire({
@@ -204,5 +223,14 @@ export class CustomModalComponent {
   camposCompletos(): boolean {
     return this.nombre.trim() !== '' && this.clave.trim() !== '';
 
+  }
+  toUpperCase(event: any): void {
+    event.target.value = event.target.value.toUpperCase();
+  }
+  eliminarRegistro(registro: any) {
+    let id = this.lstAreas.indexOf(registro);
+    if (id != 0) {
+      this.lstAreas.splice(id);
+    }
   }
 }

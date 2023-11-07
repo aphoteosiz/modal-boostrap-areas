@@ -65,8 +65,13 @@
         }
         .input-lleno{
           border: thin solid green}
+                    .mensaje-obligatorio {
+                      color: red;
+                      font-size: 12px;
+                      margin-top: 4px;
+                    }
 
-        
+
 
 
 
