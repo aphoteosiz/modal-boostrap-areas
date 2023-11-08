@@ -4,6 +4,7 @@ import { area } from './interfaces/area.interfaces';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { departamento } from './interfaces/departamento.interfaces';
+import { Directive, HostListener,ElementRef } from '@angular/core';
 
 
 
@@ -13,6 +14,7 @@ import { departamento } from './interfaces/departamento.interfaces';
   templateUrl: './custom-modal.component.html',
   styleUrls: ['./custom-modal.component.css']
 })
+
 export class CustomModalComponent {
   nombre: string = '';
   clave: string = '';
@@ -31,26 +33,6 @@ export class CustomModalComponent {
 
   registro: FormGroup;
 
-
-
-  constructor(public modalService: ModalService, private formBuilder: FormBuilder) {
-    this.registro = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      clave: ['', [Validators.required, Validators.maxLength(4)]],
-      departamento: ['']
-
-
-    })
-  }
-
-  lstAreas: area[] = [];
-  areas: area = {
-    id: 0,
-    nombre: 'eni',
-    clave: '1234',
-    departamento: 'infra'
-  }
-
   lstDepartamento: departamento[] = [];
   Departamento: departamento = {
     id: 0,
@@ -67,6 +49,27 @@ export class CustomModalComponent {
     nombre: 'ventas',
   }
   registros: area[] = [];
+
+  constructor(public modalService: ModalService, private formBuilder: FormBuilder) {
+    this.registro = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      clave: ['', [Validators.required, Validators.maxLength(4)]],
+      departamento: ['']
+
+
+    })
+    this.lstDepartamento = [this.Departamento, this.departamento1, this.departamento2];
+  }
+
+  lstAreas: area[] = [];
+  areas: area = {
+    id: 0,
+    nombre: 'eni',
+    clave: '1234',
+    departamento: 'infra'
+  }
+
+
 
 
   ngOnInit() {
@@ -183,18 +186,23 @@ export class CustomModalComponent {
     const inputValue = inputElement.value;
 
     // Utiliza una expresión regular para permitir solo letras (sin acentos)
-    const letras = inputValue.replace(/[^a-zA-Z]+/g, '');
+    const letras = inputValue.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜ]+/g, '');
 
     // Convierte las letras a mayúsculas
     inputElement.value = letras.toUpperCase();
   }
-  validarYConvertirNombre(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const inputValue = inputElement.value;
+  validarYConvertirNombre(newValue: string) {
+
+    const palabras = newValue.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜÑñ\s]+/g, '');
+    this.nombre = palabras;
+    this.CargarDatos.viewToModelUpdate(this.nombre);
+
+
 
     // Utiliza una expresión regular para permitir solo letras (sin acentos)
-    const palabras = inputValue.replace(/[^a-zA-Z]+/g, '');
-    inputElement.value = palabras;
+
+
+
   }
   validarFormulario(): boolean {
     if (this.form.valid) {
@@ -231,6 +239,14 @@ export class CustomModalComponent {
     let id = this.lstAreas.indexOf(registro);
     if (id != 0) {
       this.lstAreas.splice(id);
+    }
+  }
+  soloLetras(event: KeyboardEvent): void {
+    const key = event.key;
+
+    // Verifica si la tecla presionada es un número y evita la entrada
+    if (/\d/.test(key)) {
+      event.preventDefault();
     }
   }
 }

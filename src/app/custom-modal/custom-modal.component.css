@@ -1,3 +1,5 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
 .modal-is-open {
   background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
@@ -22,61 +24,62 @@
 
 @keyframes fade-in {
   0% {
-    opacity: 0
+    opacity: 0;
   }
 
   to {
-    opacity: 1
+    opacity: 1;
   }
 }
 
 @-webkit-keyframes fade-in {
   0% {
-    opacity: 0
+    opacity: 0;
   }
 
   to {
-    opacity: 1
+    opacity: 1;
   }
 }
-    .left-label {
-      padding: 1rem;
-      text-align: left;
-    }
+.left-label {
+  padding: 0rem;
+  text-align: left;
+}
 
-    .centered-input {
-      width: 300px;
-      margin: 0 auto;
-      /* Esto centra el elemento horizontalmente */
-    }
+.centered-input {
+  width: 300px;
+  margin: 0 auto;
+  /* Esto centra el elemento horizontalmente */
+}
 
-    .centered-select {
-      width: 300px;
-      margin: 0 auto;
-    }
-    .centrar{
-      width: 200px;
-      margin: 1%;
+.centered-select {
+  width: 300px;
+  margin: 0 auto;
+}
+.centrar {
+  width: 200px;
+  margin: 1%;
 
-        justify-content: center;
-    }
-        .input-vacio {
-          border: thin solid red;
-        }
-        .input-lleno{
-          border: thin solid green}
-                    .mensaje-obligatorio {
-                      color: red;
-                      font-size: 12px;
-                      margin-top: 4px;
-                    }
-
-
-
-
-
-
-
-
-
-
+  justify-content: center;
+}
+.input-vacio {
+  border: thin solid red;
+}
+.input-lleno {
+  border: thin solid green;
+}
+.mensaje-obligatorio {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.modal-header {
+  background-color: green;
+  /* Fondo gris oscuro */
+  color: #fff;
+  /* Texto en blanco */
+  text-align: center;
+  /* Alineación del texto al centro */
+  padding: 1rem;
+  /* Espaciado interno de 1 rem (ajusta según tus necesidades) */
+}
