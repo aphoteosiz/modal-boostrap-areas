@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ModalService } from '../modal.service';
 import { area } from './interfaces/area.interfaces';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { departamento } from './interfaces/departamento.interfaces';
-import { Directive, HostListener,ElementRef } from '@angular/core';
+
 
 
 
@@ -16,7 +16,7 @@ import { Directive, HostListener,ElementRef } from '@angular/core';
 })
 
 export class CustomModalComponent {
-  nombre: string = '';
+  nombre: string;
   clave: string = '';
   selectedOption: string = '';
   CargarDatos: any;
@@ -31,7 +31,7 @@ export class CustomModalComponent {
   registroOriginal: any;
 
 
-  registro: FormGroup;
+
 
   lstDepartamento: departamento[] = [];
   Departamento: departamento = {
@@ -50,14 +50,8 @@ export class CustomModalComponent {
   }
   registros: area[] = [];
 
-  constructor(public modalService: ModalService, private formBuilder: FormBuilder) {
-    this.registro = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      clave: ['', [Validators.required, Validators.maxLength(4)]],
-      departamento: ['']
+  constructor(public modalService: ModalService) {
 
-
-    })
     this.lstDepartamento = [this.Departamento, this.departamento1, this.departamento2];
   }
 
@@ -73,10 +67,7 @@ export class CustomModalComponent {
 
 
   ngOnInit() {
-    // this.lstAreas.push(this.areas);
-    // this.lstAreas.push(this.areas1);
-    // this.lstAreas.push(this.areas2);
-    // this.lstAreas.push(this.areas3);
+
     this.nombre = '';
     this.clave = '';
     this.selectedOption = '';
@@ -85,9 +76,7 @@ export class CustomModalComponent {
   }
 
   cancel() {
-    console.log("entrooooooo");
-
-    this.modalService.modalEditar = false;
+   this.modalService.modalEditar = false;
     this.modalService.modalRegistrar = false;
     this.selectedOption = '';
     this.nombre = '';
@@ -133,7 +122,7 @@ export class CustomModalComponent {
       const nuevaArea: area = {
 
         id: this.lstAreas.length + 1,
-        nombre: this.nombre.replace(/[^a-zA-Z]/g, ''),
+        nombre: this.nombre.replace(/[^a-zA-Z\s]/g, ''),
         clave: this.clave=this.clave.toUpperCase(),
         departamento: this.selectedOption
 
@@ -143,31 +132,7 @@ export class CustomModalComponent {
     }
 
 
-    // if (this.registro.valid) {
-
-    //   const nuevaArea: area = {
-
-    //     id: this.lstAreas.length + 1,
-    //     nombre: this.nombre,
-    //     clave: this.clave,
-    //     departamento: this.selectedOption
-
-    //   };
-
-    //   this.lstAreas.push(nuevaArea);
-    //   this.areas = {
-    //     id: 0,
-    //     nombre: '',
-    //     clave: '',
-    //     departamento: ''
-    //   }
-
-    // }
-
-
-
-
-    this.nombre = '';
+        this.nombre = '';
     this.clave = '';
     this.selectedOption = '';
     this.modalService.closeModal();
@@ -196,45 +161,15 @@ export class CustomModalComponent {
     const palabras = newValue.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜÑñ\s]+/g, '');
     this.nombre = palabras;
     this.CargarDatos.viewToModelUpdate(this.nombre);
-
-
-
-    // Utiliza una expresión regular para permitir solo letras (sin acentos)
-
-
-
   }
-  validarFormulario(): boolean {
-    if (this.form.valid) {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'su registro ha sido guardado',
-        showConfirmButton: false,
-        timer: 1500
-      });
-
-      return true;
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'hay campos vacios!',
-        footer: 'verifique si su informacion esta completa'
-      });
-      return false;
-    }
-  }
-  campoVacio(campo: string): boolean {
+    campoVacio(campo: string): boolean {
     return campo === null || campo === '';
   }
   camposCompletos(): boolean {
     return this.nombre.trim() !== '' && this.clave.trim() !== '';
 
   }
-  toUpperCase(event: any): void {
-    event.target.value = event.target.value.toUpperCase();
-  }
+
   eliminarRegistro(registro: any) {
     let id = this.lstAreas.indexOf(registro);
     if (id != 0) {
@@ -244,8 +179,8 @@ export class CustomModalComponent {
   soloLetras(event: KeyboardEvent): void {
     const key = event.key;
 
-    // Verifica si la tecla presionada es un número y evita la entrada
-    if (/\d/.test(key)) {
+    
+    if (!/[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]/.test(key)) {
       event.preventDefault();
     }
   }

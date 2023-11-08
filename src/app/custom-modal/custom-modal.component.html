@@ -1,40 +1,3 @@
-<!-- <div *ngIf="modalService.modal" class="modal-background">
-  <div class="modal-content">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-header">
-    <h2 class="modal-title">Modal Personalizadossss</h2>
-    </div>
-    <label for="textInput1">Texto 1:</label>
-    <input type="text" id="textInput1" [(ngModel)]="input1Value">
-    <br>
-
-    <label for="textInput2">Texto 2:</label>
-    <input type="text" id="textInput2" [(ngModel)]="input2Value">
-    <br>
-    <div class="content-center">
-    <label for="selectBox">Selecciona una opción</label>
-    <br>
-    <select id="selectBox" [(ngModel)]="selectedOption">
-      <option value="opcion1">Opción 1</option>
-      <option value="opcion2">Opción 2</option>
-      <option value="opcion3">Opción 3</option>
-      <br>
-    </select>
-    </div>
-    <div class="button-container">
-
-      <button  (click)="cancel()">Cancelar</button>
-      <button  (click)="save()">Guardar</button>
-
-    </div>
-
-    </div>
-  </div>
-
-
-</div>
- -->
-
 <div class="container">
   <div class="row">
     <div class="col-sm">
@@ -49,68 +12,65 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <!-- <form [formGroup]="registro"> -->
-                  <div class="modal-body">
+
+                <div class="modal-body">
 
 
-                    <div class="container centered-input">
-                      <label class="left-label" for="nombre" class="form-group" >Nombre del
+                  <div class="container centered-input">
+                    <label class="left-label" for="nombre" class="form-group">Nombre del
                       area:</label>
-                      <input type="text" (keydown)="soloLetras($event)" id="nombre" [(ngModel)]="nombre" style="width: 300px; align-items: center;"class="form-control form-group" [ngClass]="{'input-vacio': nombre===''}"
-                       placeholder="coloque el nombre del area" (input)="validarYConvertirNombre(nombre)">
-                      <span *ngIf="nombre === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
+                    <input type="text" (keydown)="soloLetras($event)" id="nombre" [(ngModel)]="nombre"
+                      style="width: 300px; align-items: center;" class="form-control form-group"
+                      [ngClass]="{'input-vacio': nombre===''}" placeholder="coloque el nombre del area"
+                      (input)="validarYConvertirNombre(nombre)">
+                    <span *ngIf="nombre === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
 
-                      <!-- <div *ngIf="registro.get('nombre').hasError('required')" class="error-message">
-
-                      </div> -->
-                    </div>
-
-
-
-
-                    <div class=" container centered-input">
-                      <label class="left-label" for="clave" class="form-group">clave:</label>
-                      <input type="text" (keydown)="soloLetras($event)" id="clave" [(ngModel)]="clave" style="width: 300px; text-transform: uppercase;" class="form-control form-group"
-                      [ngClass]="{'input-vacio': clave ===''}" placeholder="max cuatro caracteres"  maxlength="4" (input)="validarYConvertirClave($event)" >
-                      <span *ngIf="clave === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
-                      <!-- <div *ngIf="registro.get('clave').hasError('maxlength')" class="error-message">
-                        La clave debe tener un máximo de 4 caracteres.
-                      </div> -->
-                    </div>
+                  </div>
 
 
 
 
-                    <div class=" container centered-input">
-                      <label class="left-label" for="selectBox" class="form-group"> departamento:</label>
-                      <select class="centered-select left-label" id="departamento" style="width: 300px;" [(ngModel)]="selectedOption" class="form-control form-group" >
-                        <option value="" [disabled]="true" [selected]="true">seleccione un departamento</option>
-                        <!-- <option value="opcion1">Opción 1</option>
-                        <option value="opcion2">Opción 2</option>
-                        <option value="opcion3">Opción 3</option> -->
-                        <option *ngFor="let item of lstDepartamento" [value]="item.nombre">{{item.nombre}}
-                        </option>
+                  <div class=" container centered-input">
+                    <label class="left-label" for="clave" class="form-group">clave:</label>
+                    <input type="text" (keydown)="soloLetras($event)" id="clave" [(ngModel)]="clave"
+                      style="width: 300px; text-transform: uppercase;" class="form-control form-group"
+                      [ngClass]="{'input-vacio': clave ===''}" placeholder="max cuatro caracteres" maxlength="4"
+                      (input)="validarYConvertirClave($event)">
+                    <span *ngIf="clave === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
 
-                      </select>
+                  </div>
 
-                    </div>
-                    </div>
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm">
 
-                          <div class="modal-footer d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-success" data-dismiss="modal"
-                               (click)="guardaRegistro()" [disabled]="nombre === ''|| clave=== ''">añadir <i class="bi bi-file-earmark-plus"></i></button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                              (click)="cancel()">cerrar <i class="bi bi-x-square"></i></button>
 
-                          </div>
-                        </div>
+
+                  <div class=" container centered-input">
+                    <label class="left-label" for="selectBox" class="form-group"> departamento:</label>
+                    <select class="centered-select left-label" id="departamento" style="width: 300px;"
+                      [(ngModel)]="selectedOption" class="form-control form-group">
+                      <option value="" [disabled]="true" [selected]="true">seleccione un departamento</option>
+
+                      <option *ngFor="let item of lstDepartamento" [value]="item.nombre">{{item.nombre}}
+                      </option>
+
+                    </select>
+
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+
+                      <div class="modal-footer d-flex justify-content-center align-items-center">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="guardaRegistro()"
+                          [disabled]="nombre === ''|| clave=== ''">añadir <i
+                            class="bi bi-file-earmark-plus"></i></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()">cerrar <i
+                            class="bi bi-x-square"></i></button>
+
                       </div>
                     </div>
-
-                <!-- </form> -->
+                  </div>
+                </div>
 
               </div>
 
@@ -174,23 +134,27 @@
 
 
                     <div class="container centered-input">
-                       <label class="left-label" for="nombre" class="form-group">Nombre del
-                      area:</label>
-                      <input type="text" (keydown)="soloLetras($event)" id="nombre" [(ngModel)]="registroEditado.nombre" [ngClass]="{'input-vacio': nombre ===''}"
-                        style="width: 300px"  class="form-control form-group" required (input)="validarYConvertirNombre(nombre)">
-                      <span *ngIf="registroEditado.nombre=== ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
-                      </div>
+                      <label class="left-label" for="nombre" class="form-group">Nombre del
+                        area:</label>
+                      <input type="text" (keydown)="soloLetras($event)" id="nombre" [(ngModel)]="registroEditado.nombre"
+                        [ngClass]="{'input-vacio': nombre ===''}" style="width: 300px" class="form-control form-group"
+                        required (input)="validarYConvertirNombre(nombre)">
+                      <span *ngIf="registroEditado.nombre=== ''" class="mensaje-obligatorio">*Este campo es
+                        obligatorio</span>
+                    </div>
 
 
-                      <div class=" container centered-input">
-                    <label class="left-label" for="textInput2">clave:</label>
+                    <div class=" container centered-input">
+                      <label class="left-label" for="textInput2">clave:</label>
 
 
-                      <input type="text" (keydown)="soloLetras($event)" id="clave" [(ngModel)]="registroEditado.clave" [ngClass]="{'input-vacio': clave ===''}"
-                        style="width: 300px" placeholder="max cuatro caracteres" required  class="form-control form-group"
-                        maxlength="4" (input)="validarYConvertirClave($event)">
-                        <span *ngIf="registroEditado.clave === ''" class="mensaje-obligatorio">*Este campo es obligatorio</span>
-                      </div>
+                      <input type="text" (keydown)="soloLetras($event)" id="clave" [(ngModel)]="registroEditado.clave"
+                        [ngClass]="{'input-vacio': clave ===''}" style="width: 300px"
+                        placeholder="max cuatro caracteres" class="form-control form-group" maxlength="4"
+                        (input)="validarYConvertirClave($event)">
+                      <span *ngIf="registroEditado.clave === ''" class="mensaje-obligatorio">*Este campo es
+                        obligatorio</span>
+                    </div>
 
 
 
@@ -198,36 +162,35 @@
                     <div class=" container centered-input">
                       <label class="left-label" for="selectBox">departamento:</label>
 
-                      <select class="centered-select" id="selectedOption" [(ngModel)]="registroEditado.departamento" style="width: 300;"  class="form-control form-group">
+                      <select class="centered-select" id="selectedOption" [(ngModel)]="registroEditado.departamento"
+                        style="width: 300" class="form-control form-group">
                         <option value="" [disabled]="true" [selected]="true">seleccione un departamento</option>
-                        <!-- <option value="opcion1">Opción 1</option>
-                        <option value="opcion2">Opción 2</option>
-                        <option value="opcion3">Opción 3</option> -->
-                          <option *ngFor="let item of lstDepartamento" [value]="item.nombre">{{item.nombre}}
-                          </option>
+
+                        <option *ngFor="let item of lstDepartamento" [value]="item.nombre">{{item.nombre}}
+                        </option>
                       </select>
                     </div>
-                    </div>
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm">
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-sm">
 
-                          <div class="modal-footer d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-success" data-dismiss="modal"
-                              (click)="save()" [disabled]="registroEditado.nombre=== ''|| registroEditado.clave=== ''" >actualizar</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"
-                              (click)="cancel()">cerrar</button>
-                          </div>
+                        <div class="modal-footer d-flex justify-content-center align-items-center">
+                          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="save()"
+                            [disabled]="registroEditado.nombre=== ''|| registroEditado.clave=== ''">actualizar <i class="bi bi-file-earmark-arrow-up"></i></button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal"
+                            (click)="cancel()">cerrar <i class="bi bi-x-square"></i> </button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
