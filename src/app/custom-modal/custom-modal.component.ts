@@ -76,7 +76,7 @@ export class CustomModalComponent {
   }
 
   cancel() {
-   this.modalService.modalEditar = false;
+    this.modalService.modalEditar = false;
     this.modalService.modalRegistrar = false;
     this.selectedOption = '';
     this.nombre = '';
@@ -123,7 +123,7 @@ export class CustomModalComponent {
 
         id: this.lstAreas.length + 1,
         nombre: this.nombre.replace(/[^a-zA-Z\s]/g, ''),
-        clave: this.clave=this.clave.toUpperCase(),
+        clave: this.clave = this.clave.toUpperCase(),
         departamento: this.selectedOption
 
 
@@ -132,7 +132,7 @@ export class CustomModalComponent {
     }
 
 
-        this.nombre = '';
+    this.nombre = '';
     this.clave = '';
     this.selectedOption = '';
     this.modalService.closeModal();
@@ -162,24 +162,31 @@ export class CustomModalComponent {
     this.nombre = palabras;
     this.CargarDatos.viewToModelUpdate(this.nombre);
   }
-    campoVacio(campo: string): boolean {
+  campoVacio(campo: string): boolean {
     return campo === null || campo === '';
   }
   camposCompletos(): boolean {
     return this.nombre.trim() !== '' && this.clave.trim() !== '';
 
   }
+  eliminarRegistro(id: number) {
 
-  eliminarRegistro(registro: any) {
-    let id = this.lstAreas.indexOf(registro);
-    if (id != 0) {
-      this.lstAreas.splice(id);
+      const index = this.lstAreas.findIndex(registro => registro.id === id);
+      if(index !== -1) {
+      this.lstAreas.splice(index, 1);
     }
   }
+
+  // eliminarRegistro(registro: any) {
+  //   let id = this.lstAreas.indexOf(registro);
+  //   if (id != 0) {
+  //     this.lstAreas.splice(id);
+  //   }
+  // }
   soloLetras(event: KeyboardEvent): void {
     const key = event.key;
 
-    
+
     if (!/[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]/.test(key)) {
       event.preventDefault();
     }
